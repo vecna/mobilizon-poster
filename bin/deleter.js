@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const _ = require('lodash');
 const fetch = require('node-fetch');
 const nconf = require('nconf');

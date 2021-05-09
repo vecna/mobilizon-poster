@@ -1,11 +1,13 @@
+#!/usr/bin/evn node
 const _ = require('lodash');
 const moment = require('moment');
 const debug = require('debug')('mobilizon-poster');
+const nconf = require('nconf');
  
 const event = require('../lib/event');
+const shared = require('../lib/shared');
 const location = require('../lib/location');
 
-const nconf = require('nconf');
 nconf.argv().env().file({file: "config.json"});
 
 function fetchVariables(varmap) {
@@ -34,7 +36,6 @@ function fetchVariables(varmap) {
 
 async function poster() {
     
-    const shared = require('../lib/shared');
     shared.integrityChecks({
         start: 'When the event begin: Format YYYY-MM-DD HH:mm',
         end: 'When the event ends: Format YYYY-MM-DD HH:mm',
