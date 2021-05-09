@@ -5,15 +5,20 @@ const debug = require('debug')('mobilizon-ical-poster');
 const ical = require('ical');
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+const nconf = require('nconf');
 const shared = require('./shared');
+nconf.argv().env().file({file: "config.json"});
 
 const fs = require('fs');
-const fname = "./1599.ics";
-debug("Opening file %s", fname);
+
+shared.integrityChecks({'ics': '--ics is the downloaded calendar file to be posted'})
+const fname = nconf.get('ics');
+debug("Opening ICAL file %s", fname);
 const content = fs.readFileSync(fname, 'utf-8')
 const data = ical.parseICS(content);
 
-// console.log(_.sample(data));
+console.log(_.sample(data));
+process.exit(1);
 
 const results = _.map(data, async function(edata, eventid) {
     if(edata.status !== "CONFIRMED") {

@@ -1,4 +1,4 @@
 node_modules/*
 config.json
 identities.json
-eventlog/*.event
+eventlog/*

@@ -2,9 +2,11 @@ const _ = require('lodash');
 const fs = require('fs');
 const moment = require('moment');
 const fetch = require('node-fetch');
+const debug = require('debug')('poster');
 const nconf = require('nconf');
 
 const shared = require('./shared');
+const location = require('./location');
 
 nconf.argv().env().file({file: "config.json"});
 
@@ -94,20 +96,7 @@ function fetchVariables(varmap) {
 }
 
 async function postToMobilizon(eventvars) {
-
-    const location = {
-        "country":"Italy",
-        "description":"Via Balsorano",
-        "geom":"12.67513624920975;41.91885223378078",
-        "id":null,
-        "locality":"Rome",
-        "originId":"nominatim:28084686",
-        "postalCode":"00132",
-        "region":"Lazio",
-        "street":" ",
-        "type":"residential",
-        "url":null
-    };
+ 
     createEvent.variables.beginsOn = eventvars.start.toISOString();
     createEvent.variables.endsOn = eventvars.end.toISOString();
     createEvent.variables.title = eventvars.title;
@@ -175,15 +164,31 @@ async function postToMobilizon(eventvars) {
 }
 
 async function main() {
+
+    shared.integrityChecks({
+        start: 'Date in YYYY-MM-DD HH:mm Format',
+        end: 'Date in YYYY-MM-DD HH:mm Format',
+        title: 'Event title',
+        description: 'Event description, you should supply the "\n" this way, if any',
+        url: 'Event URL, or Facebook URL, or leave it empty with ""',
+        address: "You should specify a full address, feel free to try many combo, but works: 'Street N, City, Region'"
+    });
+
     const eventvars = fetchVariables({
         start: moment,
         end: moment,
         title: _.toString,
         description: _.toString,
-        address: _.toString,
         url: _.toString,
+        address: _.toString,
     })
+
+    eventvars.location = await location.queryLocation(eventvars.address);
+    debug(eventvars);
+
+
     await postToMobilizon(eventvars);
+    debug("Posted successfully, now listing the last four Event in the node:");
     await fetchLastFourEvents();
 }
 
@@ -192,11 +197,6 @@ module.exports = {
     fetchLastFourEvents,
 }
 
-shared.integrityChecks();
 /* this is an hack to see if it is invoked directly of by inclusion */
-if(_.filter(process.argv, _.matches('poster.js')).length)
+if(_.filter(process.argv, function(e) { return _.endsWith(e, 'poster.js'); }))
     main();
-
-const b = {"operationName":"createEvent","variables":{"title":"An event from a group","description":"<p>this is a test and the event should be blocked by my browser, then replicated via cli</p>","beginsOn":"2021-04-13T08:45:00.000Z","endsOn":"2021-04-13T11:45:00.000Z","status":"CONFIRMED","visibility":"PUBLIC","joinOptions":"FREE","draft":false,"tags":["Dance","Pasta"],"onlineAddress":"","phoneAddress":"","physicalAddress":{"country":"Italy","description":"Chiesa di San Lorenzo","locality":"Bibbiena","postalCode":"52011","region":"Tuscany","street":" Via Bernardo Dovizi","type":"place_of_worship","id":null,"originId":"nominatim:423896837","url":null,"geom":"11.817091618309483;43.69415775"},"options":{"maximumAttendeeCapacity":0,"remainingAttendeeCapacity":0,"showRemainingAttendeeCapacity":false,"anonymousParticipation":true,"hideOrganizerWhenGroupEvent":false,"offers":[],"participationConditions":[],"attendees":[],"program":"","commentModeration":"CLOSED","showParticipationPrice":false,"showStartTime":true,"showEndTime":true},"attributedToId":null,"contacts":[],"organizerActorId":"838"},"query":"mutation createEvent($organizerActorId: ID!, $attributedToId: ID, $title: String!, $description: String!, $beginsOn: DateTime!, $endsOn: DateTime, $status: EventStatus, $visibility: EventVisibility, $joinOptions: EventJoinOptions, $draft: Boolean, $tags: [String], $picture: MediaInput, $onlineAddress: String, $phoneAddress: String, $category: String, $physicalAddress: AddressInput, $options: EventOptionsInput, $contacts: [Contact]) {\n  createEvent(\n    organizerActorId: $organizerActorId\n    attributedToId: $attributedToId\n    title: $title\n    description: $description\n    beginsOn: $beginsOn\n    endsOn: $endsOn\n    status: $status\n    visibility: $visibility\n    joinOptions: $joinOptions\n    draft: $draft\n    tags: $tags\n    picture: $picture\n    onlineAddress: $onlineAddress\n    phoneAddress: $phoneAddress\n    category: $category\n    physicalAddress: $physicalAddress\n    options: $options\n    contacts: $contacts\n  ) {\n    id\n    uuid\n    title\n    url\n    local\n    description\n    beginsOn\n    endsOn\n    status\n    visibility\n    joinOptions\n    draft\n    picture {\n      id\n      url\n      __typename\n    }\n    publishAt\n    category\n    onlineAddress\n    phoneAddress\n    physicalAddress {\n      description\n      street\n      locality\n      postalCode\n      region\n      country\n      geom\n      type\n      id\n      originId\n      __typename\n    }\n    attributedTo {\n      id\n      domain\n      name\n      url\n      preferredUsername\n      avatar {\n        id\n        url\n        __typename\n      }\n      __typename\n    }\n    organizerActor {\n      avatar {\n        id\n        url\n        __typename\n      }\n      preferredUsername\n      domain\n      name\n      url\n      id\n      __typename\n    }\n    contacts {\n      avatar {\n        id\n        url\n        __typename\n      }\n      preferredUsername\n      domain\n      name\n      url\n      id\n      __typename\n    }\n    participantStats {\n      going\n      notApproved\n      participant\n      __typename\n    }\n    tags {\n      id\n      slug\n      title\n      __typename\n    }\n    options {\n      maximumAttendeeCapacity\n      remainingAttendeeCapacity\n      showRemainingAttendeeCapacity\n      anonymousParticipation\n      showStartTime\n      showEndTime\n      offers {\n        price\n        priceCurrency\n        url\n        __typename\n      }\n      participationConditions {\n        title\n        content\n        url\n        __typename\n      }\n      attendees\n      program\n      commentModeration\n      showParticipationPrice\n      hideOrganizerWhenGroupEvent\n      __typename\n    }\n    __typename\n  }\n}\n"};
-const q = JSON.parse(b.query);
-
