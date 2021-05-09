@@ -2,13 +2,11 @@ const _ = require('lodash');
 const fetch = require('node-fetch');
 const nconf = require('nconf');
 
+const shared = require('./shared');
+
 nconf.argv().env().file({file: "config.json"});
 
-if(!nconf.get('event') || _.isNaN(_.parseInt(nconf.get('event')))) {
-    console.log("Error: requied --event and must the the numeric ID of the event");
-    process.exit(1);
-}
-
+shared.integrityChecks({'event':'required the numberic unique identified of as --event'});
 fetch(nconf.get('api'), {
   "headers": {
     "accept": "*/*",

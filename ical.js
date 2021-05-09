@@ -5,6 +5,8 @@ const debug = require('debug')('mobilizon-ical-poster');
 const ical = require('ical');
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+const shared = require('./shared');
+
 const fs = require('fs');
 const fname = "./1599.ics";
 debug("Opening file %s", fname);
