@@ -3,10 +3,11 @@ const _ = require('lodash');
 const fetch = require('node-fetch');
 const nconf = require('nconf');
 
+const shared = require('../lib/shared');
+
 nconf.argv().env().file({file: "config.json"});
 
 async function deleter() {
-    const shared = require('../lib/shared');
     shared.integrityChecks({'event':'required the numberic unique identified of as --event'});
     return await fetch(nconf.get('api'), {
       "headers": {
@@ -32,6 +33,4 @@ async function deleter() {
     });
 }
 
-module.exports = {
-    deleter
-}
+deleter();

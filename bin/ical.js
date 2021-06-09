@@ -25,7 +25,7 @@ async function processcal() {
             return false;
         }
         debug("Sending event %s", edata.summary);
-        await event.postToMobilizon({
+        const ret = await event.postToMobilizon({
             start: edata.start,
             end: edata.end,
             title: edata.summary,
@@ -34,6 +34,7 @@ async function processcal() {
             url: edata.url.val,
             tags: [ "radar.squat" ],
         });
+        debug("Completed: %s", ret);
     });
 
 }

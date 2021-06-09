@@ -1,4 +1,4 @@
-#!/usr/bin/evn node
+#!/usr/bin/env node
 const _ = require('lodash');
 const moment = require('moment');
 const debug = require('debug')('mobilizon-poster');

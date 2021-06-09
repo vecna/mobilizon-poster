@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+const _ = require('lodash');
+
+
+fetch('https://restrealitaet.de/tanze/')
+
+JSDOM
+
+href="/tanze/events/XHJqcYT6l"
+
+<div class="EventListItem_date__fxf55">Fr 18:00</div><div class="EventListItem_description__2pC4A"><h2 class="EventListItem_title__3xSXM">Radiocast #25</h2><div class="EventListItem_dateMobile__l4W_u"><span>18:00</span></div><div class="EventListItem_location__1JxdZ">kunststaub.fm</div></div><div class="EventListItem_favContainer__2OPXI"><div class="EventListItem_star__2w9rI EventListItem_star_unclickable__1fpbN"></div><span class="EventListItem_starredCount__2Dw_S">1</span></div>
