@@ -10,30 +10,6 @@ const location = require('../lib/location');
 
 nconf.argv().env().file({file: "config.json"});
 
-function fetchVariables(varmap) {
-    const retval = {};
-    const errors = _.compact(_.map(varmap, function(f, name) {
-        const readv = nconf.get(name);
-        debugger;
-        if(!readv || !readv.length)
-            return "--" + name + " is required";
-        
-        const lapz = f(readv);
-        if(!lapz)
-            return "--" + name + " invalid format? " + lapz;
-
-        console.log(name, lapz);
-        retval[name] = lapz;
-        return null;
-    }));
-    
-    if(errors.length) {
-        console.log(errors.join("\n"));
-        process.exit(1);
-    }
-    return retval;
-}
-
 async function poster() {
     
     shared.integrityChecks({
@@ -45,7 +21,7 @@ async function poster() {
         address: "You should specify a full address — works: 'Street N, City, Region'"
     });
 
-    const eventvars = fetchVariables({
+    const eventvars = shared.fetchVariables({
         start: moment,
         end: moment,
         title: _.toString,

@@ -26,7 +26,7 @@ this tool read from an ical event and call 'poster' as many time as events found
 
 ## renamer (not yet implemented)
 
-This tool renamed a group.
+This tool rename a group, so it should be used when a "— unofficial" group become renamed.
 
 ## uploader (not yet implemented)
 
