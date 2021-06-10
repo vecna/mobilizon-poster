@@ -37,3 +37,7 @@ A picture should be uploaded separately and then linked to the event. It is a ta
 this is the tool that perform access to mobilizon server and save the authentication token, so the other tools can use it.
 
 # Configuration variables
+
+## Location 
+
+node bin/poster.js --start "2021-05-09 10:22" --end "2021-05-09 11:22" --title "Test event new structure" --description "blah blah" --url "nothing" --location "Moritzplatz, Berlin, Germany
