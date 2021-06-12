@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const _ = require('lodash');
 const moment = require('moment');
-const debug = require('debug')('mobilizon-location');
+const debug = require('debug')('bin:location');
 const nconf = require('nconf');
  
 const shared = require('../lib/shared');

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const _ = require('lodash');
 const moment = require('moment');
-const debug = require('debug')('mobilizon-poster');
+const debug = require('debug')('bin:poster');
 const nconf = require('nconf');
  
 const event = require('../lib/event');

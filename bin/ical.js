@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const _ = require('lodash');
-const debug = require('debug')('mobilizon-ical-poster');
+const debug = require('debug')('bin:ical');
 const ical = require('ical');
 const nconf = require('nconf');
 const fs = require('fs');
