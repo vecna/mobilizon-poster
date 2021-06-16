@@ -1,4 +1,6 @@
 node_modules/*
+eventlog/*
+
 config.json
 identities.json
-eventlog/*
+groups.json
