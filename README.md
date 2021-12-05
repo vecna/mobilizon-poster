@@ -18,6 +18,26 @@ We should separate the tool from the groups managed by individual, if you want t
 
 this is the tool that post events in mobilizone
 
+## bin/postEvent
+
+this is the tool to create an Event on a mobilizon instance using a json file as input.
+Usage: `node bin/postEvent.js /absolute/path/to/jile.json`
+As json keys are expected: 
+```
+{
+  "start": "YYYY-MM-DD HH:mm",
+  "end": null or "YYYY-MM-DD HH:mm",
+  "title": "$string",
+  "description": "$string",
+  "address": "$string",
+  "url": "$url",
+  "picture": {
+    "media_id": "$idFromUploader.sh"
+  },
+  "organizer_id": "$id",
+  "attributed_to_id": "$id"
+}
+```
 ## bin/deleter
 
 this delete an event previously submit by 'poster'
@@ -29,6 +49,7 @@ this tool read from an ical event and call 'poster' as many time as events found
 ## bin/login 
 
 this is the tool that perform access to mobilizon server and save the authentication token, so the other tools can use it.
+Usage: `node bin/login.js --login=$login --password=$password`
 
 ## bin/group-list
 
