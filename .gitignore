@@ -4,3 +4,5 @@ eventlog/*
 config.json
 identities.json
 groups.json
+
+*.ics

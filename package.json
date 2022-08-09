@@ -1,13 +1,14 @@
 {
-  "name": "mobiltool",
-  "version": "1.0.0",
-  "description": "",
-  "scripts": {
-    "start": "echo \"Please check README.md\" && exit 1"
+  "name": "@_vecna/mobilizon-poster",
+  "version": "0.1.0",
+  "description": "A library that helps to interact with joinmobilizon.org, by automatically posting events and handling authentication tokens",
+  "keywords": ["mobilizon", "joinmobilizon.org", "fediverse"],
+  "author": "Claudio Agosti",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/_vecna/mobilizon-poster"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "license": "AGPL-3.0",
   "dependencies": {
     "debug": "^4.3.1",
     "ical": "^0.8.0",
