@@ -1,24 +1,23 @@
 # mobilizon-poster
 
-A simple nodejs script(s) to interact with mobilizon via command line.
+A simple nodejs script(s) to interact with mobilizon via command line, it also act as a **library** to allow your backend script to interact with mobilizon.
+Since August 2022 there is a refactor in progress, and you can pick this script from [npm package](https://www.npmjs.com/package/@_vecna/mobilizon-poster).
 
-It grows _organically_ it means it might not follow a precise and robust development pattern. You should consider this is an alpha stage working prototype.
+This tool has been used in alpha stage in 2021 and gradual improvement are happening. Most of its usecase is with httsp://libr.events
 
-## This tool enable a mobilizon user to post in their account. 
+# This is in ALPHA. What's the goal?
 
-Read [here for usage tips and documentation](https://quickened.interoperability.tracking.exposed/mobilizon-poster).
+* This tool enable a mobilizon user to post in their account. 
+* Read [here for usage tips and documentation](https://libr.events/mobilizon-poster).
+* become a usable third party tool, available as [npm package](https://www.npmjs.com/package/@_vecna/mobilizon-poster).
 
-We should separate the tool from the groups managed by individual, if you want to keep a small list:
+# Executables 
 
-- https://mobilize.berlin/@radarsquatnet\_repost
-- https://mobilize.berlin/@facebook\_repost
-- [add yours via PR]
-
-## bin/poster 
+### bin/poster 
 
 this is the tool that post events in mobilizone
 
-## bin/postEvent
+### bin/postEvent
 
 this is the tool to create an Event on a mobilizon instance using a json file as input.
 Usage: `node bin/postEvent.js /absolute/path/to/jile.json`
@@ -38,20 +37,21 @@ As json keys are expected:
   "attributed_to_id": "$id"
 }
 ```
-## bin/deleter
+
+### bin/deleter
 
 this delete an event previously submit by 'poster'
 
-## bin/ical 
+### bin/ical 
 
 this tool read from an ical event and call 'poster' as many time as events found
 
-## bin/login 
+### bin/login 
 
 this is the tool that perform access to mobilizon server and save the authentication token, so the other tools can use it.
 Usage: `node bin/login.js --login=$login --password=$password`
 
-## bin/group-list
+### bin/group-list
 
 --- 
 
@@ -64,7 +64,7 @@ This tool rename a group, so it should be used when a "— unofficial" group bec
 A picture should be uploaded separately and then linked to the event. It is a task that require a dedicated tool.
 
 
-# Configuration variables
+# Configuration variables / example
 
 ## Location 
 

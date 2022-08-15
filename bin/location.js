@@ -25,3 +25,7 @@ async function locationResolver() {
 }
 
 locationResolver();
+
+module.exports = {
+    locationResolver,
+}

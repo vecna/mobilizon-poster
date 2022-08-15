@@ -21,3 +21,7 @@ async function queryGroupList() {
 }
 
 queryGroupList();
+
+module.exports = {
+    queryGroupList,
+}

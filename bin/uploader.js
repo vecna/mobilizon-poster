@@ -29,3 +29,7 @@ async function uploader() {
 }
 
 uploader();
+
+module.exports = {
+    uploader
+}

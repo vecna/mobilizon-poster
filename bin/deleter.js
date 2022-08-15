@@ -28,3 +28,7 @@ async function deleter() {
 }
 
 deleter();
+
+module.exports = {
+  deleter
+}

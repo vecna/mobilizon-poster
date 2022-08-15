@@ -38,3 +38,7 @@ async function connectAndSaveTokens() {
 }
 
 connectAndSaveTokens();
+
+module.exports = {
+    connectAndSaveTokens
+}

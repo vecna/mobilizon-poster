@@ -11,7 +11,11 @@ const location = require('../lib/location');
 nconf.argv().env().file({file: "config.json"});
 
 async function showEvents() {
-       await event.fetchLastFourEvents();
+    await event.fetchLastFourEvents();
 }
 
 showEvents();
+
+module.exports = {
+    showEvents
+}

@@ -6,7 +6,7 @@
   "author": "Claudio Agosti",
   "repository": {
     "type": "git",
-    "url": "https://github.com/_vecna/mobilizon-poster"
+    "url": "https://github.com/vecna/mobilizon-poster"
   },
   "license": "AGPL-3.0",
   "dependencies": {

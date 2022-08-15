@@ -27,3 +27,7 @@ async function poster() {
 }
 
 poster();
+
+module.exports = {
+  happening: poster
+}

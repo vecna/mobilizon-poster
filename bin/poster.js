@@ -39,3 +39,7 @@ async function poster() {
 }
 
 poster();
+
+module.exports = {
+    poster
+}

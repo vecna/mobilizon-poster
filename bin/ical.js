@@ -52,3 +52,7 @@ for (let k in data) {
         }
     }
 } */
+
+module.exports = {
+    processcal
+}
