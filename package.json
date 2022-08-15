@@ -1,8 +1,12 @@
 {
   "name": "@_vecna/mobilizon-poster",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A library that helps to interact with joinmobilizon.org, by automatically posting events and handling authentication tokens",
-  "keywords": ["mobilizon", "joinmobilizon.org", "fediverse"],
+  "keywords": [
+    "mobilizon",
+    "joinmobilizon.org",
+    "fediverse"
+  ],
   "author": "Claudio Agosti",
   "repository": {
     "type": "git",
