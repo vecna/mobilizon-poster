@@ -69,3 +69,20 @@ A picture should be uploaded separately and then linked to the event. It is a ta
 ## Location 
 
 node bin/poster.js --start "2021-05-09 10:22" --end "2021-05-09 11:22" --title "Test event new structure" --description "blah blah" --url "nothing" --location "Moritzplatz, Berlin, Germany
+
+# Libraries
+
+```
+createEvent.postToMobilizon
+event.fetchLastFourEvents
+groups.groupList
+location.location
+location.queryLocation
+login.perform
+login.getInfo
+shared.integrityChecks
+shared.mobilizoneHTTPAPIfetch
+shared.fetchVariables
+shared.getToken
+upload.uploadToMobilizon
+```
