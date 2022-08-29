@@ -17,7 +17,7 @@ async function deleter() {
       },
       query: 'mutation DeleteEvent($eventId: ID!) {\n  deleteEvent(eventId: $eventId) {\n    id\n    __typename\n  }\n}\n'
     };
-    const token = await shared.getToken();
+    const token = shared.getToken();
     const response = await shared.mobilizoneHTTPAPIfetch(
       payload,
       token

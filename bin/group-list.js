@@ -12,7 +12,7 @@ nconf.argv().env().file({file: "config.json"});
 
 async function queryGroupList() {
    
-    const token = await shared.getToken();
+    const token = shared.getToken();
     debug("Querying server %s to get group list", nconf.get('api'));
     const elements = await groups.groupList(token);
 
