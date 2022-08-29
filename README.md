@@ -66,9 +66,19 @@ A picture should be uploaded separately and then linked to the event. It is a ta
 
 # Configuration variables / example
 
-## Location 
+all of these command needs a `apiUrl` variable, or an `--api` option in the command line to specify a mobilizone server
 
-node bin/poster.js --start "2021-05-09 10:22" --end "2021-05-09 11:22" --title "Test event new structure" --description "blah blah" --url "nothing" --location "Moritzplatz, Berlin, Germany
+## Location resolved
+
+```
+node bin/location.js --address "Moritzplatz, Berlin, Germany"
+```
+
+## Event Poster
+
+```
+node bin/poster.js --start "2021-05-09 10:22" --end "2021-05-09 11:22" --title "Test event new structure" --description "blah blah" --url "nothing" --address "Moritzplatz, Berlin, Germany"
+```
 
 # Libraries
 

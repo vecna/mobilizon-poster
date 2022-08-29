@@ -2,7 +2,7 @@ node_modules/*
 eventlog/*
 
 config.json
-identities.json
 groups.json
+.identities.json
 
 *.ics

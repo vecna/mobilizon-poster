@@ -28,13 +28,28 @@ async function connectAndSaveTokens() {
 
     const accountInfo = await login.getInfo(token);
 
-    debug("Saving token and account info in identities.json file; this would be used as default");
-    const content = {
+    let existing = [];
+    try {
+        const data = fs.readFileSync(shared.identity_filename, 'utf-8');
+        existing = JSON.parse(data);
+        debug(`Loaded existing ${existing.length} identities, servers: [${_.map(existing, 'server')}]`);
+    } catch(error) {
+        debug(`file ${shared.identity_filename} not found`);
+    }
+
+    const newcontent = _.reject(existing, {server: nconf.get('api')});
+    debug(`Saving token and account info in ${shared.identity_filename} file; this would be used as default`);
+
+    newcontent.push({
         identities: accountInfo,
+    	server: nconf.get('api'),
+    	date: moment().toISOString(),
         token,
-    };
-    fs.writeFileSync("identities.json", JSON.stringify(content, undefined, 2), 'utf-8');
-    console.log("Saved authentication token in identities.json");
+    });
+
+    fs.writeFileSync(shared.identity_filename,
+        JSON.stringify(newcontent, undefined, 2), 'utf-8');
+    console.log(`Saved authentication token in ${shared.identity_filename}. servers supported: [${_.map(newcontent, 'server')}]`);
 }
 
 connectAndSaveTokens();

@@ -5,6 +5,7 @@ const debug = require('debug')('bin:poster');
 const nconf = require('nconf');
  
 const event = require('../lib/event');
+const eposter = require('../lib/createEvent');
 const shared = require('../lib/shared');
 const location = require('../lib/location');
 
@@ -33,7 +34,7 @@ async function poster() {
     eventvars.location = await location.queryLocation(eventvars.address);
     debug(eventvars);
    
-    await event.postToMobilizon(eventvars);
+    await eposter.postToMobilizon(eventvars);
     debug("Posted successfully, now listing the last four Event in the node:");
     await event.fetchLastFourEvents();
 }
