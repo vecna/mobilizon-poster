@@ -1,0 +1,40 @@
+{
+    "operationName": "createEvent",
+    "variables": {
+        "title": "TEST cCcc",
+        "description": "",
+        "beginsOn": "2022-08-30T13:45:00.000Z",
+        "endsOn": "2022-08-30T16:45:00.000Z",
+        "status": "CONFIRMED",
+        "category": "MEETING",
+        "visibility": "PUBLIC",
+        "joinOptions": "FREE",
+        "draft": false,
+        "tags": [],
+        "onlineAddress": "",
+        "phoneAddress": "",
+        "physicalAddress": null,
+        "options": {
+            "maximumAttendeeCapacity": 0,
+            "remainingAttendeeCapacity": 0,
+            "showRemainingAttendeeCapacity": false,
+            "anonymousParticipation": false,
+            "hideOrganizerWhenGroupEvent": false,
+            "offers": [],
+            "participationConditions": [],
+            "attendees": [],
+            "program": "",
+            "commentModeration": "ALLOW_ALL",
+            "showParticipationPrice": false,
+            "showStartTime": true,
+            "showEndTime": true,
+            "timezone": null,
+            "isOnline": false
+        },
+        "metadata": [],
+        "attributedToId": null,
+        "contacts": [],
+        "organizerActorId": "4"
+    },
+    "query": "mutation createEvent($organizerActorId: ID!, $attributedToId: ID, $title: String!, $description: String!, $beginsOn: DateTime!, $endsOn: DateTime, $status: EventStatus, $visibility: EventVisibility, $joinOptions: EventJoinOptions, $draft: Boolean, $tags: [String], $picture: MediaInput, $onlineAddress: String, $phoneAddress: String, $category: EventCategory, $physicalAddress: AddressInput, $options: EventOptionsInput, $contacts: [Contact], $metadata: [EventMetadataInput]) {\n  createEvent(\n    organizerActorId: $organizerActorId\n    attributedToId: $attributedToId\n    title: $title\n    description: $description\n    beginsOn: $beginsOn\n    endsOn: $endsOn\n    status: $status\n    visibility: $visibility\n    joinOptions: $joinOptions\n    draft: $draft\n    tags: $tags\n    picture: $picture\n    onlineAddress: $onlineAddress\n    phoneAddress: $phoneAddress\n    category: $category\n    physicalAddress: $physicalAddress\n    options: $options\n    contacts: $contacts\n    metadata: $metadata\n  ) {\n    ...FullEvent\n    __typename\n  }\n}\n\nfragment FullEvent on Event {\n  id\n  uuid\n  url\n  local\n  title\n  description\n  beginsOn\n  endsOn\n  status\n  visibility\n  joinOptions\n  draft\n  language\n  category\n  picture {\n    id\n    url\n    name\n    metadata {\n      width\n      height\n      blurhash\n      __typename\n    }\n    __typename\n  }\n  publishAt\n  onlineAddress\n  phoneAddress\n  physicalAddress {\n    ...AdressFragment\n    __typename\n  }\n  organizerActor {\n    ...ActorFragment\n    __typename\n  }\n  contacts {\n    ...ActorFragment\n    __typename\n  }\n  attributedTo {\n    ...ActorFragment\n    __typename\n  }\n  participantStats {\n    going\n    notApproved\n    participant\n    __typename\n  }\n  tags {\n    ...TagFragment\n    __typename\n  }\n  relatedEvents {\n    id\n    uuid\n    title\n    beginsOn\n    status\n    language\n    picture {\n      id\n      url\n      name\n      metadata {\n        width\n        height\n        blurhash\n        __typename\n      }\n      __typename\n    }\n    physicalAddress {\n      ...AdressFragment\n      __typename\n    }\n    organizerActor {\n      ...ActorFragment\n      __typename\n    }\n    attributedTo {\n      ...ActorFragment\n      __typename\n    }\n    options {\n      ...EventOptions\n      __typename\n    }\n    tags {\n      ...TagFragment\n      __typename\n    }\n    __typename\n  }\n  options {\n    ...EventOptions\n    __typename\n  }\n  metadata {\n    key\n    title\n    value\n    type\n    __typename\n  }\n  __typename\n}\n\nfragment AdressFragment on Address {\n  id\n  description\n  geom\n  street\n  locality\n  postalCode\n  region\n  country\n  type\n  url\n  originId\n  timezone\n  __typename\n}\n\nfragment TagFragment on Tag {\n  id\n  slug\n  title\n  __typename\n}\n\nfragment EventOptions on EventOptions {\n  maximumAttendeeCapacity\n  remainingAttendeeCapacity\n  showRemainingAttendeeCapacity\n  anonymousParticipation\n  showStartTime\n  showEndTime\n  timezone\n  offers {\n    price\n    priceCurrency\n    url\n    __typename\n  }\n  participationConditions {\n    title\n    content\n    url\n    __typename\n  }\n  attendees\n  program\n  commentModeration\n  showParticipationPrice\n  hideOrganizerWhenGroupEvent\n  isOnline\n  __typename\n}\n\nfragment ActorFragment on Actor {\n  id\n  avatar {\n    id\n    url\n    __typename\n  }\n  type\n  preferredUsername\n  name\n  domain\n  summary\n  url\n  __typename\n}"
+}
