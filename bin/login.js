@@ -20,6 +20,7 @@ async function connectAndSaveTokens() {
     const eventvars = shared.fetchVariables({
         login: _.toString,
         password: _.toString,
+        api: _.toString,
     })
 
     const token = await login.perform(eventvars);

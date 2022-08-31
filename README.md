@@ -1,17 +1,114 @@
 # mobilizon-poster
 
-A simple nodejs script(s) to interact with mobilizon via command line, it also act as a **library** to allow your backend script to interact with mobilizon.
-Since August 2022 there is a refactor in progress, and you can pick this script from [npm package](https://www.npmjs.com/package/@_vecna/mobilizon-poster).
+A simple library to interact with [joinmobilizone.org](https://joinmobilizone.org), you can clone it from [https://github.com/vecna/mobilizon-poster](https://github.com/vecna/mobilizon-poster).
 
-This tool has been used in alpha stage in 2021 and gradual improvement are happening. Most of its usecase is with httsp://libr.events
+It also works as a set of scripts to help a CLI interaction with mobilizon, but it is largely under-developed.
 
-# This is in ALPHA. What's the goal?
+# basic functions
+
+To post an event you need to call a sequence of mobilizone APIs, for example: you need to authenticate, then to resolve the location of your event, then to create an event.
+
+Mobilizon revolves around the concept of `groups` and this is not entrirely (if not at all) supported in this package.
+
+Below it follow the sequence of actions given:
+
+```
+const login = require('@_vecna/mobilizon-poster').login;
+
+const username = "username";
+const password = "password";
+const api = "https://mobilizone-instance.xxx/api"; // note the api at the end
+
+const token = await login.perform({ login: username, password, api });
+const userInfo = await login.getInfo(token);
+```
+
+if you are using the script `bin/login.js` it would save this token into a file named `.identities.json` but if your code, you should depack `userInfo` and save the `id` because it is necessary when you post new events!
+
+the `userInfo` depacked contains these fields:
+
+```
+"identities": [
+  {
+    "__typename": "Person",
+    "avatar": {
+      "__typename": "Media",
+      "id": "2b494db8-9bbd-40bc-a88d-e3edc3f9495a",
+      "url": "https://mobilizon.libr.events/media/3c9a553c4f789c64f25db8a03a8299f91479bac1050e7e2c2cd4c99f97313a71.png?name=Screenshot%20from%202022-08-12%2013-35-10.png"
+    },
+    "id": "4",
+    "name": "xxxx@xxxx.xxx",
+    "preferredUsername": "ManyExes",
+    "type": "PERSON"
+  }
+```
+
+#### After you have the token and the `id`, you can post the events:
+
+```
+
+const createEvent = require('@_vecna/mobilizon-poster').createEvent;
+const location = require('@_vecna/mobilizon-poster').location;
+
+const eventvars = {
+  start: new Date(), // the object need to have a valid .toISOString() method
+  end: new Date(),   // this can be null, and
+  title: "Event title!",
+  description: "A description that should also contains\n\nnewlines",
+  url: "https://your.event.promotion.or.anything.else",
+  address: "A string that would be queried soon!",
+};
+
+eventvars.location = await location.queryLocation(
+  eventvars.address, localString=null, apiEndpoint
+);
+
+const results = await createEvent.postToMobilizon(eventvars);
+```
+
+if you print `eventvars.location` you'll find an OpenStreetMap object like this, when the string is "Berlin, c-base":
+
+```
+lib:location Fetched 1 possible locations, the first is: +0ms
+lib:location {
+lib:location   __typename: 'Address',
+lib:location   country: 'Germany',
+lib:location   description: 'c-base',
+lib:location   geom: '13.4201313;52.5129735',
+lib:location   id: null,
+lib:location   locality: 'Berlin',
+lib:location   originId: 'nominatim:260050809',
+lib:location   postalCode: '10179',
+lib:location   region: null,
+lib:location   street: '20 Rungestraße',
+lib:location   type: 'house',
+lib:location   url: null
+lib:location } +0ms
+```
+
+Inside of the `results` variable you should find also `url`, the link at the event just generated.
+
+P.S: execute this codes with `DEBUG=*` would enable a verbose I/O reporting.
+
+## Why has been developed
 
 * This tool enable a mobilizon user to post in their account. 
 * Read [here for usage tips and documentation](https://libr.events/mobilizon-poster).
 * become a usable third party tool, available as [npm package](https://www.npmjs.com/package/@_vecna/mobilizon-poster).
 
 # Executables 
+
+The simplest example is:
+
+```
+$ bin/login.js --login username@mail --password xxxyyyzzz --api https://mobilizon.libr.events/api
+```
+
+This create a file named `.identities.json`.
+
+```
+$ bin/poster.js --start 2022-08-03 --end 2022-08-03 --title "TEST-ignore-me" --description "a description" --url "https://an.url.of.the.event" --address "berlin, c-base" --api https://mobilizon.libr.events/api
+```
 
 ### bin/poster 
 
@@ -21,7 +118,8 @@ this is the tool that post events in mobilizone
 
 this is the tool to create an Event on a mobilizon instance using a json file as input.
 Usage: `node bin/postEvent.js /absolute/path/to/jile.json`
-As json keys are expected: 
+As json keys are expected:
+
 ```
 {
   "start": "YYYY-MM-DD HH:mm",
