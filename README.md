@@ -13,7 +13,7 @@ Mobilizon revolves around the concept of `groups` and this is not entrirely (if 
 Below it follow the sequence of actions given:
 
 ```
-const login = require('@_vecna/mobilizon-poster').login;
+const login = require('@_vecna/mobilizon-poster').lib.login;
 
 const username = "username";
 const password = "password";
@@ -47,8 +47,8 @@ the `userInfo` depacked contains these fields:
 
 ```
 
-const createEvent = require('@_vecna/mobilizon-poster').createEvent;
-const location = require('@_vecna/mobilizon-poster').location;
+const createEvent = require('@_vecna/mobilizon-poster').lib.createEvent;
+const location = require('@_vecna/mobilizon-poster').lib.location;
 
 const eventvars = {
   start: new Date(), // the object need to have a valid .toISOString() method
@@ -62,6 +62,12 @@ const eventvars = {
 eventvars.location = await location.queryLocation(
   eventvars.address, localString=null, apiEndpoint
 );
+
+/* for authorization */
+eventvars.token = token;
+eventvars.organizerActorId = userInfo.identities[0].id;
+
+eventvars.tags = [ "a list of tags" ]; // by default it says "unofficial"
 
 const results = await createEvent.postToMobilizon(eventvars);
 ```
