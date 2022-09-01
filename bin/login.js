@@ -24,7 +24,8 @@ async function connectAndSaveTokens() {
     })
 
     const token = await login.perform(eventvars);
-    // remind, this process THROW AWAY the refreshToken as still is unclear when it should be used
+    // the token expire quite often, so a new login every time, 
+    // before posting, would be necessary.
     debug("retrived authentication token! ");
 
     const accountInfo = await login.getInfo(token);
