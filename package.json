@@ -15,6 +15,7 @@
   "license": "AGPL-3.0",
   "dependencies": {
     "debug": "^4.3.1",
+    "dotenv": "^16.0.2",
     "ical": "^0.8.0",
     "jsdom": "^16.5.3",
     "lodash": "^4.17.21",
@@ -25,9 +26,7 @@
   "devDependencies": {
     "jest": "^29.0.2"
   },
-  
   "scripts": {
     "test": "jest"
-  } 
-
+  }
 }
