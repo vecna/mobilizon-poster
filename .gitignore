@@ -4,5 +4,6 @@ eventlog/*
 config.json
 groups.json
 .identities.json
-
+.vscode
 *.ics
+.env
