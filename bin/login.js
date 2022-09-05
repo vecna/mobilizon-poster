@@ -8,17 +8,17 @@ const fs = require('fs');
 const shared = require('../lib/shared');
 const login = require('../lib/login');
 
-nconf.argv().env().file({file: "config.json"});
+nconf.argv().env()
 
 async function connectAndSaveTokens() {
     
     shared.integrityChecks({
-        login: '<login>',
+        email: '<email>',
         password: '<password>',
     });
 
     const eventvars = shared.fetchVariables({
-        login: _.toString,
+        email: _.toString,
         password: _.toString,
         api: _.toString,
     })
