@@ -28,7 +28,7 @@ async function connectAndSaveTokens() {
     // before posting, would be necessary.
     debug("retrieved authentication token! ");
 
-    const accountInfo = await login.getInfo(token);
+    const accountInfo = await login.getInfo(token, eventvars.api);
 
     let existing = [];
     try {
