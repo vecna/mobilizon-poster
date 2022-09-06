@@ -35,12 +35,19 @@ it('attempts to run the CLI login function', async () => {
 
 
 it('attempts to run the CLI login function when an identity file already exists', async () => {
+    fs.writeFileSync(shared.identity_filename,JSON.stringify(
     [
         {
             identities: [[Object]],
-            server: 'https://mobilizon.libr.events/api',
+            server: 'some api',
             date: '2022-09-06T17:52:13.661Z',
-            token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJtb2JpbGl6b24iLCJleHAiOjE2NjI0ODc2MzIsImlhdCI6MTY2MjQ4NjczMiwiaXNzIjoibW9iaWxpem9uIiwianRpIjoiYTgwODQ2NGItZDQ3NC00NDhhLWJjMTctMzI0MjAzMmZjNzkwIiwibmJmIjoxNjYyNDg2NzMxLCJzdWIiOiJVc2VyOjExIiwidHlwIjoiYWNjZXNzIn0.6ty4JYmx5jVWlWGn3kNhJA_FBFjlKMdHOwZoes4oD-NMS20Bg1ynDc0-5l8BPgBhCo1M_tnqH-2UNvZnj-kjGw'
+            token: 'some_token'
         }
-    ]
+    ]))
+
+    console.log = jest.fn();
+    await connectAndSaveTokens();
+    const login_file_content = JSON.parse(fs.readFileSync(shared.identity_filename, "utf-8"))
+    expect(login_file_content.length).toBe(2)
+    expect(console.log.mock.calls[0][0]).toBe(`Saved authentication token in ${shared.identity_filename}. Servers supported: [some api,${nconf.get("api")}]`);
 })

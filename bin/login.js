@@ -51,7 +51,7 @@ async function connectAndSaveTokens() {
 
     fs.writeFileSync(shared.identity_filename,
         JSON.stringify(newContent, undefined, 2), 'utf-8');
-    console.log(`Saved authentication token in ${shared.identity_filename}. servers supported: [${_.map(newContent, 'server')}]`);
+    console.log(`Saved authentication token in ${shared.identity_filename}. Servers supported: [${_.map(newContent, 'server')}]`);
 }
 
 connectAndSaveTokens();
