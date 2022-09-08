@@ -6,7 +6,6 @@ const shared = require("../../../lib/shared");
 
 const TIMEOUT=70000
 
-nconf.argv().env();
 
 describe("CLI", () => {
   afterEach(() => {
@@ -14,12 +13,16 @@ describe("CLI", () => {
   });
 
   beforeEach(() => {
+
     mockFs({ [shared.identity_file_path]: {} })
 
   });
 
   it("attempts to run the CLI login function", async () => {
     // this test relies on the env email and password variables that will be read by nconf as CLI arguments
+
+
+    console.log = jest.fn();
     await connectAndSaveTokens();
 
     const login_file_content = JSON.parse(
@@ -30,6 +33,12 @@ describe("CLI", () => {
 
     const api = nconf.get("api");
     expect(login_file_content[0].server).toBe(api);
+
+    expect(console.log.mock.calls[0][0]).toBe(
+        `Saved authentication token in ${
+            shared.identity_filename
+        }. Servers supported: [${nconf.get("api")}]`
+    );
   }, TIMEOUT);
 
   it("attempts to run the CLI login function when an identity file already exists", async () => {
@@ -56,4 +65,6 @@ describe("CLI", () => {
       }. Servers supported: [some api,${nconf.get("api")}]`
     );
   });
+
+
 }, TIMEOUT);
