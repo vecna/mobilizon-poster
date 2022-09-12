@@ -200,3 +200,16 @@ shared.fetchVariables
 shared.getToken
 upload.uploadToMobilizon
 ```
+
+
+## To run the tests
+
+To set up the local Mobilizon instance, please have [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) installed. The integration tests expect a running instance of mobilizon available. 
+
+To run the Mobilizon install inside docker:
+
+```docker-compose -f docker-compose-test.yml```
+
+To run the test suites:
+
+```npm tests```
