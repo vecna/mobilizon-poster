@@ -8,27 +8,27 @@ const fs = require('fs');
 const shared = require('../lib/shared');
 const login = require('../lib/login');
 
-nconf.argv().env().file({file: "config.json"});
+nconf.argv().env()
 
 async function connectAndSaveTokens() {
     
     shared.integrityChecks({
-        login: '<login>',
+        email: '<email>',
         password: '<password>',
     });
 
     const eventvars = shared.fetchVariables({
-        login: _.toString,
+        email: _.toString,
         password: _.toString,
         api: _.toString,
     })
 
-    const token = await login.perform(eventvars);
+    const token = await login.perform(eventvars.email, eventvars.password, eventvars.api);
     // the token expire quite often, so a new login every time, 
     // before posting, would be necessary.
-    debug("retrived authentication token! ");
+    debug("retrieved authentication token! ");
 
-    const accountInfo = await login.getInfo(token);
+    const accountInfo = await login.getInfo(token, eventvars.api);
 
     let existing = [];
     try {
@@ -39,10 +39,10 @@ async function connectAndSaveTokens() {
         debug(`file ${shared.identity_filename} not found`);
     }
 
-    const newcontent = _.reject(existing, {server: nconf.get('api')});
+    const newContent = _.reject(existing, {server: nconf.get('api')});
     debug(`Saving token and account info in ${shared.identity_filename} file; this would be used as default`);
 
-    newcontent.push({
+    newContent.push({
         identities: accountInfo,
     	server: nconf.get('api'),
     	date: moment().toISOString(),
@@ -50,8 +50,8 @@ async function connectAndSaveTokens() {
     });
 
     fs.writeFileSync(shared.identity_filename,
-        JSON.stringify(newcontent, undefined, 2), 'utf-8');
-    console.log(`Saved authentication token in ${shared.identity_filename}. servers supported: [${_.map(newcontent, 'server')}]`);
+        JSON.stringify(newContent, undefined, 2), 'utf-8');
+    console.log(`Saved authentication token in ${shared.identity_filename}. Servers supported: [${_.map(newContent, 'server')}]`);
 }
 
 connectAndSaveTokens();

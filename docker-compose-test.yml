@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  mobilizon:
+    image: framasoft/mobilizon
+    volumes:
+      - ./public/uploads:/var/lib/mobilizon/uploads
+      # - ${PWD}/config.exs:/etc/mobilizon/config.exs:ro
+      # - ${PWD}/GeoLite2-City.mmdb:/var/lib/mobilizon/geo_db/GeoLite2-City.mmdb
+    ports:
+      - "4000:4000"
+    env_file:
+            docker.env
+  db:
+    image: postgis/postgis:13-3.1
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    env_file:
+            docker.env
+    ports:
+            -    5432:5432
+
+networks:
+  default:
+    ipam:
+      driver: default
