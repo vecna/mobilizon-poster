@@ -1,12 +1,12 @@
 # mobilizon-poster
 
-A simple library to interact with [joinmobilizone.org](https://joinmobilizone.org), you can clone it from [https://github.com/vecna/mobilizon-poster](https://github.com/vecna/mobilizon-poster).
+A simple library to interact with [joinmobilizon.org](https://joinmobilizon.org), you can clone it from [https://github.com/vecna/mobilizon-poster](https://github.com/vecna/mobilizon-poster).
 
 It also works as a set of scripts to help a CLI interaction with mobilizon, but it is largely under-developed.
 
 # basic functions
 
-To post an event you need to call a sequence of mobilizone APIs, for example: you need to authenticate, then to resolve the location of your event, then to create an event.
+To post an event you need to call a sequence of mobilizon APIs, for example: you need to authenticate, then to resolve the location of your event, then to create an event.
 
 Mobilizon revolves around the concept of `groups` and this is not entrirely (if not at all) supported in this package.
 
@@ -17,7 +17,7 @@ const login = require('@_vecna/mobilizon-poster').lib.login;
 
 const username = "username";
 const password = "password";
-const api = "https://mobilizone-instance.xxx/api"; // note the api at the end
+const api = "https://mobilizon-instance.xxx/api"; // note the api at the end
 
 const token = await login.perform({ login: username, password, api });
 const userInfo = await login.getInfo(token);
@@ -118,7 +118,7 @@ $ bin/poster.js --start 2022-08-03 --end 2022-08-03 --title "TEST-ignore-me" --d
 
 ### bin/poster 
 
-this is the tool that post events in mobilizone
+this is the tool that post events in mobilizon
 
 ### bin/postEvent
 
@@ -170,7 +170,7 @@ A picture should be uploaded separately and then linked to the event. It is a ta
 
 # Configuration variables / example
 
-all of these command needs a `apiUrl` variable, or an `--api` option in the command line to specify a mobilizone server
+all of these command needs a `apiUrl` variable, or an `--api` option in the command line to specify a mobilizon server
 
 ## Location resolved
 
@@ -195,7 +195,7 @@ location.queryLocation
 login.perform
 login.getInfo
 shared.integrityChecks
-shared.mobilizoneHTTPAPIfetch
+shared.mobilizonHTTPAPIfetch
 shared.fetchVariables
 shared.getToken
 upload.uploadToMobilizon
